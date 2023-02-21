@@ -14,7 +14,7 @@ if (isset($_FILES["imagen"])) {
         $whitd = $dimensiones[0];
         $heigt = $dimensiones[1];
         $carpeta = "img/";
-        // echo $tipo;
+        echo $tipo;
         if ($tipo != 'image/jpeg') {
             echo "Error el archivo no es imagen";
         } else if ($size > 3 * 1024 * 1024) {
@@ -22,9 +22,12 @@ if (isset($_FILES["imagen"])) {
         } else {
             $nombre = getUniqueName();
             $src = $carpeta . $nombre;
-            insertar($src, $_POST["user"]);
-            move_uploaded_file($ruta_provisional, $src);
-            echo "Imagen guardada con exito";
+            if(insertar($src, $_POST["user"])){
+                move_uploaded_file($ruta_provisional, $src);
+                echo "Imagen guardada con exito";
+            }else{
+                echo  "Error al insertar en la base de datos";
+            }
         }
     }
 } else {
@@ -68,22 +71,25 @@ function insertar($path, $nombre)
                 $id = $fila["id"];
             }
             
-            $sql = $conex->prepare("INSERT INTO imagenes values(null,?,?)");
-            $sql->bind_param("si", $path, $id);
+            $sql = $conex->prepare("INSERT INTO imagenes values(null,?,?,1)");
+            $sql->bind_param("is", $id, $path);
             $result = $sql->execute();
             
             if (!$result) {
                 $json["flag"] = false;
                 $json["msg"] = mysqli_errno($conex) . ": " . mysqli_error($conex);
+                return false;
             } else {
                 $json["flag"] = true;
                 $json["msg"] = "Registro Exitoso";
+                return true;
             }
-            echo json_encode($json);
+            // echo json_encode($json);
         }
     } catch (\Throwable $th) {
         $json["flag"] = false;
         $json["msg"] = "" . $th;
         echo json_encode($json);
+        return false;
     }
 }

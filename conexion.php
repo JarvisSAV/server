@@ -1,7 +1,8 @@
 <?php  
-    //conexionPDO();
+    // conexionPDO();
+    // conexionMSQLI();
     function conexionPDO(){
-        $host = "localhost";
+        $host = "127.0.0.1";
         $dbname = "molinos";
         $username = "root";
         $pss = "";
@@ -17,7 +18,7 @@
     }
 
     function conexionMSQLI(){
-        $servername = "localhost";
+        $servername = "127.0.0.1";
         $database = "molinos";
         $username = "root";
         $password = "";

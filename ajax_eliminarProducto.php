@@ -5,7 +5,7 @@ $conn = conexionMSQLI();
 $id = $input["id"];
 
 try {
-    $sql = "DELETE from productos where id = $id";
+    $sql = "UPDATE productos set `as` = 0 where id = $id";
     $resp = $conn->query($sql);
     if(mysqli_errno($conn))
         $json["msg"] = mysqli_errno($conn) . ": " . mysqli_error($conn);

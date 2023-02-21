@@ -42,7 +42,7 @@ $json = Array();
 // }
 try {
     //code...
-    $sql = $conex->prepare("INSERT INTO productos values (null,?,?,?,?,?,?,?)");
+    $sql = $conex->prepare("INSERT INTO productos values (null,?,?,?,?,?,?,?,1)");
     $sql->bind_param("sssiiii",$nombre,$decripcion,$caracteristicas,$precio,$stock,$status,$tipo);
     $result = $sql->execute(); 
 
