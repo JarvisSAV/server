@@ -1,8 +1,8 @@
 <?php
 include('./config.php');
+
 try {
     //code...
-
     $conex = conexionMSQLI();
     $id = $input["id"];
 
@@ -23,26 +23,27 @@ try {
             $producto["descripcion"] = $fila["descripcion"];
             $producto["caracteristicas"] = $fila["caracteristicas"];
         }
-        
-        if($result2->num_rows > 0){
+
+        if ($result2->num_rows > 0) {
             $images = array();
             while ($fila = $result2->fetch_assoc()) {
-                $imagen["path"] ="http://127.0.0.1/server/".$fila["path"];
+                $imagen["path"] = "http://127.0.0.1/server/" . $fila["path"];
                 $imagen["id"] = $fila["id"];
-                array_push($images,$imagen);
+                array_push($images, $imagen);
             }
             $producto["images"] = $images;
         }
-        echo json_encode($producto);
+        $json = $producto;
     } else {
-        echo json_encode("0 results");
+        $json = "0 results";
     }
 
-
     $conex->close();
+    
 } catch (Throwable $th) {
     //throw $th;
-    $json["msg"] = "".$th;
-    echo json_encode($json);
-
+    $json["msg"] = "Error en el servidor";
 }
+
+echo json_encode($json);
+?>
