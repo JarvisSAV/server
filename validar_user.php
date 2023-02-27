@@ -1,6 +1,5 @@
 <?php
 include("config.php");
-session_start();
 
 try {
     //code...
@@ -15,11 +14,12 @@ try {
     if (mysqli_num_rows($result)) {
         if ($row = mysqli_fetch_array($result)) {
             if(md5($password) == $row["password"]){
-                $_SESSION["id"] = $row["id"];
-                $_SESSION["user_active"] = true;
-                $_SESSION["user"] = $row["username"];
-                $_SESSION["password"] = $row["password"];
+                // $_SESSION["id"] = $row["id"];
+                // $_SESSION["user_active"] = true;
+                // $_SESSION["user"] = $row["username"];
+                // $_SESSION["password"] = $row["password"];
                 $json["flag"] = true;
+                $json["id"] = $row["id"];
                 $json["msg"] = "Verificacion Exitosa ";
             }else{
                 $json["flag"] = false;
@@ -33,7 +33,7 @@ try {
 
     $conex->close();
 
-} catch (Exception $e) {
+} catch (\Throwable $e) {
     //throw $th;
     $json["msg"] = "Error en el servidor";
 }
