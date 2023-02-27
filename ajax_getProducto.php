@@ -28,7 +28,7 @@ try {
         if ($result2->num_rows > 0) {
             $images = array();
             while ($fila = $result2->fetch_assoc()) {
-                $imagen["path"] = "http://127.0.0.1/server/" . $fila["path"];
+                $imagen["path"] = "/" . $fila["path"];
                 $imagen["id"] = $fila["id"];
                 array_push($images, $imagen);
             }

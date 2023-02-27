@@ -39,10 +39,10 @@ try {
         if (mysqli_num_rows($result) > 0) {
             // Si el producto ya está en el carrito, actualizar su cantidad
             $row = mysqli_fetch_assoc($result);
-            if($row["as"] == 0){
-                $cantidad = $input["cantidad"];
-            }else{
+            if($input["mantener"] && $row["as"]==1){
                 $cantidad = $row['cantidad'] + $input['cantidad'];
+            }else{
+                $cantidad = $input["cantidad"];
             }
             $query = "UPDATE carritos_has_productos SET cantidad = $cantidad, `as` = 1 WHERE carritos_id = $carrito_id AND productos_id = $producto_id";
             mysqli_query($conn, $query);
@@ -52,7 +52,15 @@ try {
             $query = "INSERT INTO carritos_has_productos (carritos_id, productos_id, cantidad, `as`) VALUES ($carrito_id, $producto_id, $cantidad, 1)";
             mysqli_query($conn, $query);
         }
+
+        $query = "SELECT total FROM carritos WHERE usuario_id = $user_id";
+        $result = mysqli_query($conn, $query);
+        $row = mysqli_fetch_assoc($result);
+        $total = $row['total'];
+
+        $json["total"] = $total;
         $json["msg"] = "Producto agregado correctamente";
+        $json["flag"] = true;
     }
 
 } catch (\Throwable $th) {

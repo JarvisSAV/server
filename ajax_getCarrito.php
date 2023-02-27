@@ -4,10 +4,10 @@ include('./config.php');
 try {
     //code...
     $conex = conexionMSQLI();
-    $id = $input["id"];
+    $user_id = $input["user_id"];
     $json = array();
 
-    $sql = "CALL vista_carrito ($id)";
+    $sql = "CALL vista_carrito ($user_id)";
     $result = $conex->query($sql);
 
     if ($result->num_rows > 0) {
@@ -24,9 +24,9 @@ try {
             array_push($json,$producto);
         }
         
-    } else {
-        $json = "0 results";
     }
+
+    // $json["msg"] = mysqli_error($conex);
 
     $conex->close();
     

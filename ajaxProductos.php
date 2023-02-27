@@ -4,13 +4,20 @@ include("./config.php");
 try {
     //code...
     $conn = conexionMSQLI();
+    $producto_tipo = $input["producto_tipo"];
+    $producto_status = $input["producto_status"];
+    $productos_limite = $input["productos_limit"];
     $json = array();
 
-    $sql = "SELECT * from productos";
+    if($productos_limite != -1  && $producto_status != -1){
+        $sql = "SELECT * from productos where Tipo_Producto_id = $producto_tipo and `as` = 1 limit $productos_limite";
+    }else{
+        $sql = "SELECT * from productos where `as` = 1";
+    }
+
     $resultado = $conn->query($sql);
 
     while ($fila = $resultado->fetch_array()) {
-        if ($fila["as"] == 1) {
             $producto["Tipo_Producto_id"] = $fila["Tipo_Producto_id"];
             $producto["id"] = $fila["id"];
             $producto["nombre"] = $fila["nombre"];
@@ -24,7 +31,7 @@ try {
             if ($result2->num_rows > 0) {
                 $images = array();
                 while ($fila = $result2->fetch_assoc()) {
-                    $imagen["path"] = "http://127.0.0.1/server/" . $fila["path"];
+                    $imagen["path"] = "/".$fila["path"];
                     $imagen["id"] = $fila["id"];
                     array_push($images, $imagen);
                 }
@@ -34,9 +41,6 @@ try {
             }
 
             array_push($json, $producto);
-
-        }
-        
     }
 
     $conn->close();
