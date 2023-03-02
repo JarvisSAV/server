@@ -21,8 +21,8 @@ if (isset($_POST["producto"])) {
             //Verifica la puresa de las images
             foreach ($imagenes['tmp_name'] as $key => $tmp_name) {
                 //filtrar por extension
-                if ($imagenes['type'][$key] != 'image/jpeg') {
-                    $flag["msg"] = "Error, el archivo no es imagen, o no es jpeg";
+                if ($imagenes['type'][$key] != 'image/jpeg' && $imagenes['type'][$key] != 'image/png') {
+                    $flag["msg"] = "Error, no se admiten archivos con extension ".$imagenes['type'][$key];
                     break 1;
                 } else if ($imagenes['size'][$key] > 3 * 1024 * 1024) {
                     $flag["msg"] = "Algunas imagenes exeden el tamaño permitido, el máximo es de 3MB";

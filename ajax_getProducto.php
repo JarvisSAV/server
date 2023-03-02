@@ -22,13 +22,13 @@ try {
             $producto["caracteristicas"] = $fila["caracteristicas"];
         }
         
-        $sql2 = "SELECT * FROM imagenes WHERE productos_id = $id";
+        $sql2 = "SELECT * FROM imagenes WHERE productos_id = $id and `as`=1";
         $result2 = $conex->query($sql2);    
 
         if ($result2->num_rows > 0) {
             $images = array();
             while ($fila = $result2->fetch_assoc()) {
-                $imagen["path"] = "/" . $fila["path"];
+                $imagen["path"] = $pathServer . $fila["path"];
                 $imagen["id"] = $fila["id"];
                 array_push($images, $imagen);
             }

@@ -1,21 +1,21 @@
 <?php  
     // conexionPDO();
     // conexionMSQLI();
-    function conexionPDO(){
-        $host = "127.0.0.1";
-        $dbname = "molinos";
-        $username = "root";
-        $pss = "";
+    // function conexionPDO(){
+    //     $host = "127.0.0.1";
+    //     $dbname = "molinos";
+    //     $username = "root";
+    //     $pss = "";
 
-        try{
-            $conn = new PDO ("mysql:host=$host;dbname=$dbname",$username,$pss);
-            // echo "Se conecto correctamente";
-        } catch(PDOException $ex){
-            echo "Error al conectar con la base de datos:$dbname, error: $ex";
-            exit;
-        }
-        return $conn;
-    }
+    //     try{
+    //         $conn = new PDO ("mysql:host=$host;dbname=$dbname",$username,$pss);
+    //         // echo "Se conecto correctamente";
+    //     } catch(PDOException $ex){
+    //         echo "Error al conectar con la base de datos:$dbname, error: $ex";
+    //         exit;
+    //     }
+    //     return $conn;
+    // }
 
     function conexionMSQLI(){
         $servername = "127.0.0.1";
