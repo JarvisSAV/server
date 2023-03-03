@@ -8,9 +8,10 @@ try {
     $producto = "No se encontro ningun producto";
     $result = false;
 
-    $producto = new producto();
-    if (isset($input["accion"]) && $input["producto"]) {
+    $producto = new Producto();
+    if (isset($input["accion"]) && isset($input['producto'])) {
         $accion = $input["accion"];
+        $producto->setId($input["producto"]["_id"]);
         $producto->setNombre($input["producto"]["_nombre"]);
         $producto->setTipo($input["producto"]["_tipo"]);
         $producto->setPrecio($input["producto"]["_precio"]);
@@ -39,7 +40,10 @@ try {
         case 'crearProducto':
             $result = $producto->crearProducto();
             break;
-            default:
+        case 'getSingleProducto':
+            $result = $producto->getSingleProducto($pathServer);
+            break;
+        default:
             $result = false;
             break;
     }
