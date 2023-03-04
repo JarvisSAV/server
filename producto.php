@@ -120,14 +120,109 @@ class Producto implements \JsonSerializable
             'imagenes' => $this->imagenes
         ];
     }
-//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 //                      Pruebas
 //-------------------------------------------------------------------------
     public function prueba()
     {
         return "exito";
     }
+    //-------------------------------------------------------------------------
+//              edita un producto del catalogo    
 //-------------------------------------------------------------------------
+    function updateProducto()
+    {
+        $conex = conexionMSQLI();
+
+        try{
+            // Iniciar la transacción
+            $conex->begin_transaction();
+
+            try {
+                // Actualiza el producto
+                $sql = "UPDATE productos set nombre = '$this->nombre', descripcion = '$this->descripcion', caracteristicas = '$this->caracteristicas', precio = $this->precio, stock = $this->stock, status = $this->status, Tipo_Producto_id = $this->tipo where id = $this->id";
+                echo $sql;
+                $resp = $conex->query($sql);
+
+
+                if ($this->imagenes) {
+
+                    //Verifica la puresa de las images
+                    foreach ($this->imagenes['tmp_name'] as $key => $tmp_name) {
+                        //filtrar por extension
+                        if ($this->imagenes['type'][$key] != 'image/jpeg' && $this->imagenes['type'][$key] != 'image/png') {
+                            $flag["msg"] = "Error, no se admiten archivos con extension " . $this->imagenes['type'][$key];
+                            break 1;
+                        } else if ($this->imagenes['size'][$key] > 3 * 1024 * 1024) {
+                            $flag["msg"] = "Algunas imagenes exeden el tamaño permitido, el máximo es de 3MB";
+                            break 1;
+                        }
+                    }
+                    if (!isset($flag)) {
+                        // Insertar las imágenes
+                        foreach ($this->imagenes['tmp_name'] as $key => $tmp_name) {
+                            $nombre_archivo = getUniqueName(pathinfo($this->imagenes['name'][$key], PATHINFO_EXTENSION));
+                            $ruta_archivo = 'img/' . $nombre_archivo;
+                            move_uploaded_file($tmp_name, $ruta_archivo);
+                            $sql = $conex->prepare("INSERT INTO imagenes values(null,?,?,1)");
+                            $sql->bind_param("is", $this->id, $ruta_archivo);
+                            $result = $sql->execute();
+                        }
+
+                        $conex->commit();
+                        $json["flag"] = true;
+                        $json["msg"] = "Producto editado correctamente";
+                    } else {
+                        $conex->rollback();
+                        $json["flag"] = false;
+                        $json["msg"] = "" . $flag["msg"];
+                    }
+                } else {
+                    // $conex->rollback();
+                    $conex->commit();
+                    $json["flag"] = true;
+                    $json["msg"] = "Producto editado correctamente";
+                }
+            } catch (Throwable $e) {
+                // Si ocurre un error, deshacer la transacción y mostrar el mensaje de error
+                $conex->rollback();
+                $json["flag"] = false;
+                $json["msg"] = "Error al editar el producto: " . $e;
+            }
+            
+            $conex->close();
+            return $json;
+
+        }catch (\Throwable $th) {
+            //throw $th;
+            return "Error: ".$th;
+        }
+    }
+    //-------------------------------------------------------------------------
+//              Elimina un producto de catalogo    
+//-------------------------------------------------------------------------
+    function deleteProducto()
+    {
+        try {
+            //code...
+            $conn = conexionMSQLI();
+
+            $sql = "UPDATE productos set `as` = 0 where id = $this->id";
+            $resp = $conn->query($sql);
+            if (mysqli_errno($conn))
+                $json["msg"] = mysqli_errno($conn) . ": " . mysqli_error($conn);
+            else
+                $json["msg"] = "Registro Eliminado";
+
+            $conn->close();
+            return $json;
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            return "Error en el servidor";
+        }
+    }
+    //-------------------------------------------------------------------------
 //              consulta toda la informacion de un solo producto        
 //-------------------------------------------------------------------------
     function getSingleProducto($pathServer)
@@ -151,8 +246,8 @@ class Producto implements \JsonSerializable
                     $this->caracteristicas = $fila["caracteristicas"];
                 }
 
-                $json = $this->getImagenes($this,$conn,$pathServer);
-                
+                $json = $this->getImagenes($this, $conn, $pathServer);
+
             } else {
                 $json = [];
             }
@@ -261,7 +356,7 @@ class Producto implements \JsonSerializable
                 $p->setDescripcion($fila['descripcion']);
                 $p->settipo($fila['Tipo_Producto_id']);
 
-                $p = $this->getImagenes($p,$conn,$pathServer);
+                $p = $this->getImagenes($p, $conn, $pathServer);
 
                 array_push($response, json_encode($p, JSON_UNESCAPED_UNICODE));
             }
@@ -276,10 +371,10 @@ class Producto implements \JsonSerializable
         }
     }
 
-//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 //                      obtener imagenes de un producto
 //-------------------------------------------------------------------------
-    function getImagenes($p,$conn,$pathServer)
+    function getImagenes($p, $conn, $pathServer)
     {
         $sqlImages = "SELECT * FROM imagenes WHERE productos_id = $p->id and `as` = 1";
         $resultadoImages = $conn->query($sqlImages);

@@ -20,6 +20,7 @@ try {
     if (isset($_POST["accion"])) {
         $accion = $_POST["accion"];
         $p = json_decode($_POST["producto"]);
+        $producto->setid($p->id);
         $producto->setNombre($p->nombre);
         $producto->setDescripcion($p->descripcion);
         $producto->setCaracteristicas($p->caracteristicas);
@@ -27,7 +28,9 @@ try {
         $producto->setStock($p->stock);
         $producto->setStatus($p->status);
         $producto->setTipo($p->tipo);
-        $producto->setImagenes($_FILES['imagen']);
+        if(isset($_FILES["imagen"])){
+            $producto->setImagenes($_FILES['imagen']);
+        }
     }
 
     switch ($accion) {
@@ -42,6 +45,12 @@ try {
             break;
         case 'getSingleProducto':
             $result = $producto->getSingleProducto($pathServer);
+            break;
+        case 'deleteProducto':
+            $result = $producto->deleteProducto();
+            break;
+        case 'updateProducto':
+            $result = $producto->updateProducto();
             break;
         default:
             $result = false;
