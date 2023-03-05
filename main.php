@@ -35,10 +35,12 @@ try {
 
     switch ($accion) {
         case 'getProductosHome':
-            $result = $producto->getProductos($pathServer,false);
+            $all = false;
+            $result = $producto->getProductos($pathServer,$all);
             break;
         case 'getProductosCatalogo':
-            $result = $producto->getProductos($pathServer,true);
+            $all = true;
+            $result = $producto->getProductos($pathServer,$all);
             break;
         case 'crearProducto':
             $result = $producto->crearProducto();

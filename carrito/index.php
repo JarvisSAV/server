@@ -1,5 +1,5 @@
 <?php
-include('config.php');
+include('../config.php');
 
 try {
     $accion = "No se encontro ninguna accion";

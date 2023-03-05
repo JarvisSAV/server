@@ -120,14 +120,7 @@ class Producto implements \JsonSerializable
             'imagenes' => $this->imagenes
         ];
     }
-    //-------------------------------------------------------------------------
-//                      Pruebas
 //-------------------------------------------------------------------------
-    public function prueba()
-    {
-        return "exito";
-    }
-    //-------------------------------------------------------------------------
 //              edita un producto del catalogo    
 //-------------------------------------------------------------------------
     function updateProducto()
@@ -198,7 +191,7 @@ class Producto implements \JsonSerializable
             return "Error: ".$th;
         }
     }
-    //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 //              Elimina un producto de catalogo    
 //-------------------------------------------------------------------------
     function deleteProducto()
@@ -222,7 +215,7 @@ class Producto implements \JsonSerializable
             return "Error en el servidor";
         }
     }
-    //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 //              consulta toda la informacion de un solo producto        
 //-------------------------------------------------------------------------
     function getSingleProducto($pathServer)
@@ -260,7 +253,7 @@ class Producto implements \JsonSerializable
             return 'Error: ' . $th;
         }
     }
-    //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 //                      crear producto
 //-------------------------------------------------------------------------
     function crearProducto()
@@ -329,7 +322,7 @@ class Producto implements \JsonSerializable
             return "Error: " . $th;
         }
     }
-    //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 //                      getProductos
 //-------------------------------------------------------------------------
     public function getProductos($pathServer, $all)
@@ -337,8 +330,8 @@ class Producto implements \JsonSerializable
         try {
             //code...
             $conn = conexionMSQLI();
-            if ($all) {
-                $sql = "SELECT * FROM productos WHERE `as` = 1";
+            if ($all == 1) {
+                $sql = "SELECT * FROM vw_catalogo";
             } else {
                 $sql = "SELECT * FROM productos WHERE Tipo_Producto_id = $this->tipo and `as` = 1 and status = 1 limit $this->precio";
             }
@@ -353,10 +346,12 @@ class Producto implements \JsonSerializable
                 $p->setPrecio($fila['precio']);
                 $p->setStock($fila['stock']);
                 $p->setStatus($fila['status']);
-                $p->setDescripcion($fila['descripcion']);
-                $p->settipo($fila['Tipo_Producto_id']);
-
-                $p = $this->getImagenes($p, $conn, $pathServer);
+                if(!$all){
+                    $p->setDescripcion($fila['descripcion']);
+                    $p = $this->getImagenes($p, $conn, $pathServer);
+                }else{
+                    $p->setTipo($fila['nombre_tipo']);
+                }
 
                 array_push($response, json_encode($p, JSON_UNESCAPED_UNICODE));
             }
@@ -371,7 +366,7 @@ class Producto implements \JsonSerializable
         }
     }
 
-    //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 //                      obtener imagenes de un producto
 //-------------------------------------------------------------------------
     function getImagenes($p, $conn, $pathServer)
@@ -391,7 +386,6 @@ class Producto implements \JsonSerializable
             $p->setImagenes([]);
         }
 
-        // $conn->close();
         return $p;
     }
 }
