@@ -100,13 +100,16 @@ class Usuario
         $password = md5($this->password);
 
         try {
-            $sql = $conn->prepare("INSERT into usuarios values (null,?,?,?,?,?,?,?,1,1,1)");
+            $sql = $conn->prepare("INSERT into usuarios values (null,?,?,?,?,?,?,?,1,2,1)");
             $sql->bind_param('sssssss', $this->usuarname, $password, $this->nombre, $this->apaterno, $this->amaterno, $this->fechaNac, $this->mail);
             $result = $sql->execute();
 
             $conn->close();
 
-            return "Registro exitoso";
+            $json['msg'] ="Registro exitoso";
+            $json['flag'] =true;
+
+            return $json;
 
         } catch (\Throwable $th) {
             return false;
