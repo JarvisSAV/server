@@ -347,6 +347,7 @@ class Producto implements \JsonSerializable
                 $p->setStock($fila['stock']);
                 $p->setStatus($fila['status']);
                 if(!$all){
+                    $p->setCaracteristicas($fila['caracteristicas']);
                     $p->setDescripcion($fila['descripcion']);
                     $p = $this->getImagenes($p, $conn, $pathServer);
                 }else{
