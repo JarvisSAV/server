@@ -7,6 +7,7 @@ try {
     $result = false;
 
     $usuario = new Usuario();
+    
     if(isset($input['accion'])){
         $accion = $input['accion'];
         $usuario->setId($input['usuario']['_id']);
@@ -42,7 +43,8 @@ try {
     }
 
 } catch (\Throwable $th) {
-    $json = "Error en index: ".$th; 
+    $json['flag'] = false; 
+    $json['msg'] = "Error en index: ".$th; 
 }
 echo json_encode($json);
 ?>
