@@ -134,6 +134,7 @@ class Usuario
                     if (md5($this->password) == $row["password"]) {
                         $json["flag"] = true;
                         $json["id"] = $row["id"];
+                        $json["tipo"] = $row["tipo_usuario_id"];
                         $json["msg"] = "Verificacion Exitosa ";
                     } else {
                         $json["flag"] = false;
