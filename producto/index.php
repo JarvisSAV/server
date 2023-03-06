@@ -1,6 +1,6 @@
 <?php
 include('producto.php');
-include('config.php');
+include('../config.php');
 
 try {
     //code...
@@ -59,13 +59,10 @@ try {
             break;
     }
     
-    if($result){
-        $json["msg"] = $result;
-        $json["flag"] = true;
+    if(!$result){
+        $json = "No se encontro ninguna accion";
     }else{
-        $json['msg'] = "No funcion";
-        $json['flag'] = false;
-
+        $json = $result;
     }
     
 } catch (Throwable $th) {

@@ -134,7 +134,6 @@ class Producto implements \JsonSerializable
             try {
                 // Actualiza el producto
                 $sql = "UPDATE productos set nombre = '$this->nombre', descripcion = '$this->descripcion', caracteristicas = '$this->caracteristicas', precio = $this->precio, stock = $this->stock, status = $this->status, Tipo_Producto_id = $this->tipo where id = $this->id";
-                echo $sql;
                 $resp = $conex->query($sql);
 
 
@@ -289,7 +288,7 @@ class Producto implements \JsonSerializable
                         // Insertar las imágenes
                         foreach ($this->imagenes['tmp_name'] as $key => $tmp_name) {
                             $nombre_archivo = getUniqueName(pathinfo($this->imagenes['name'][$key], PATHINFO_EXTENSION));
-                            $ruta_archivo = 'img/' . $nombre_archivo;
+                            $ruta_archivo = '../img/' . $nombre_archivo;
                             move_uploaded_file($tmp_name, $ruta_archivo);
                             $sql = $conex->prepare("INSERT INTO imagenes values(null,?,?,1)");
                             $sql->bind_param("is", $producto_id, $ruta_archivo);
@@ -297,25 +296,29 @@ class Producto implements \JsonSerializable
                         }
 
                         $conex->commit();
+                        $json['flag'] = true;
                         $json["msg"] = "Producto creado correctamente";
                     } else {
                         $conex->rollback();
+                        $json['flag'] = false;
                         $json["msg"] = "" . $flag["msg"];
                     }
                 } else {
                     $conex->rollback();
+                    $json['flag'] = false;
                     $json["msg"] = "No se a encontrado ninguna imagen";
                 }
 
             } catch (Throwable $e) {
                 // Si ocurre un error, deshacer la transacción y mostrar el mensaje de error
                 $conex->rollback();
+                $json['flag'] = false;
                 $json["msg"] = "Error al crear el producto: " . $e;
             }
             // echo json_encode($json);
 
             $conex->close();
-            return $json['msg'];
+            return $json;
 
         } catch (\Throwable $th) {
             //throw $th;

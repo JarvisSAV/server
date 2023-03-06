@@ -91,23 +91,67 @@ class Usuario
     {
         $this->as = $as;
     }
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'username' => $this->usuarname,
+            'password' =>$this->password,
+            'nombre' => $this->nombre,
+            'apaterno' => $this->apaterno,
+            'amaterno' => $this->amaterno,
+            'fechaNac' => $this->fechaNac,
+            'mail' => $this->mail,
+            'tipo' => $this->tipo,
+            'as' => $this->as,
+        ];
+    }
+    //-------------------------------------------------------------------------
+//              info del usuario para mostrar
+//-------------------------------------------------------------------------
+    function getUsuario()
+    {
+        $conn = conexionMSQLI();
+        $p = new Usuario();
+        try {
+            $sql = "SELECT * from usuarios where id = $this->id";
+            $result = mysqli_query($conn, $sql);
+
+            if (mysqli_num_rows($result)) {
+                if ($row = mysqli_fetch_array($result)) {
+                    $p->usuarname = $row['username'];
+                    $p->nombre = $row['nombre'];
+                    $p->apaterno = $row['apaterno'];
+                    $p->amaterno = $row['amaterno'];
+                    $p->fechaNac = $row['fechaNac'];
+                    $p->mail = $row['mail'];
+                }
+            }
+
+            $conn->close();
+            return $p->jsonSerialize();
+        } catch (\Throwable $th) {
+            return "Error: ".$th;
+        }
+
+    }
     //-------------------------------------------------------------------------
 //              crear usuario
 //-------------------------------------------------------------------------
     function crearUsuario()
     {
         $conn = conexionMSQLI();
-        $password = md5($this->password);
 
         try {
+            $password = md5($this->password);
             $sql = $conn->prepare("INSERT into usuarios values (null,?,?,?,?,?,?,?,1,2,1)");
             $sql->bind_param('sssssss', $this->usuarname, $password, $this->nombre, $this->apaterno, $this->amaterno, $this->fechaNac, $this->mail);
             $result = $sql->execute();
 
             $conn->close();
 
-            $json['msg'] ="Registro exitoso";
-            $json['flag'] =true;
+            $json['msg'] = "Registro exitoso";
+            $json['flag'] = true;
 
             return $json;
 
@@ -152,7 +196,7 @@ class Usuario
 
         } catch (\Throwable $e) {
             //throw $th;
-            $json["msg"] = "Error en el servidor".$e;
+            $json["msg"] = "Error en el servidor" . $e;
             return $json;
         }
     }

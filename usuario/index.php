@@ -28,6 +28,9 @@ try {
         case 'validarUsuario':
             $result = $usuario->validarUsuario();
             break;
+        case 'getUsuario':
+            $result = $usuario->getUsuario();
+            break;
         default:
             break;
     }
