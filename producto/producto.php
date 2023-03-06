@@ -288,8 +288,8 @@ class Producto implements \JsonSerializable
                         // Insertar las imágenes
                         foreach ($this->imagenes['tmp_name'] as $key => $tmp_name) {
                             $nombre_archivo = getUniqueName(pathinfo($this->imagenes['name'][$key], PATHINFO_EXTENSION));
-                            $ruta_archivo = '../img/' . $nombre_archivo;
-                            move_uploaded_file($tmp_name, $ruta_archivo);
+                            $ruta_archivo = 'img/' . $nombre_archivo;
+                            move_uploaded_file($tmp_name, "../".$ruta_archivo);
                             $sql = $conex->prepare("INSERT INTO imagenes values(null,?,?,1)");
                             $sql->bind_param("is", $producto_id, $ruta_archivo);
                             $result = $sql->execute();
@@ -378,7 +378,7 @@ class Producto implements \JsonSerializable
         $sqlImages = "SELECT * FROM imagenes WHERE productos_id = $p->id and `as` = 1";
         $resultadoImages = $conn->query($sqlImages);
         $images = [];
-
+        
         if ($resultadoImages->num_rows > 0) {
             while ($fila = $resultadoImages->fetch_assoc()) {
                 $imagen["path"] = $pathServer . $fila["path"];
