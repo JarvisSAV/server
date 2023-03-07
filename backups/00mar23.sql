@@ -52,7 +52,7 @@ CREATE TABLE `carritos` (
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `carritos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +61,7 @@ CREATE TABLE `carritos` (
 
 LOCK TABLES `carritos` WRITE;
 /*!40000 ALTER TABLE `carritos` DISABLE KEYS */;
-INSERT INTO `carritos` VALUES (1,3200,1);
+INSERT INTO `carritos` VALUES (1,3500,1),(2,18000,3);
 /*!40000 ALTER TABLE `carritos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +90,7 @@ CREATE TABLE `carritos_has_productos` (
 
 LOCK TABLES `carritos_has_productos` WRITE;
 /*!40000 ALTER TABLE `carritos_has_productos` DISABLE KEYS */;
-INSERT INTO `carritos_has_productos` VALUES (1,1,1,'\0'),(1,2,1,''),(1,4,1,'\0'),(1,5,1,'\0');
+INSERT INTO `carritos_has_productos` VALUES (1,1,1,''),(1,2,7,'\0'),(1,3,1,'\0'),(1,4,1,'\0'),(1,5,1,'\0'),(2,1,1,'\0'),(2,2,2,'\0'),(2,3,2,'\0'),(2,4,1,'\0'),(2,5,3,'');
 /*!40000 ALTER TABLE `carritos_has_productos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -169,7 +169,7 @@ CREATE TABLE `imagenes` (
   PRIMARY KEY (`id`,`productos_id`),
   KEY `productos_id` (`productos_id`),
   CONSTRAINT `imagenes_ibfk_1` FOREIGN KEY (`productos_id`) REFERENCES `productos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +178,7 @@ CREATE TABLE `imagenes` (
 
 LOCK TABLES `imagenes` WRITE;
 /*!40000 ALTER TABLE `imagenes` DISABLE KEYS */;
-INSERT INTO `imagenes` VALUES (1,1,'img/img_20230303012451ca61d7beb1cfa933991955.jpg','\0'),(2,2,'img/img_202303030125138166116a071d31037e22ea.png',''),(3,4,'img/img_202303030126088993c5e159eb58a3feb195.jpg',''),(4,5,'img/img_2023030301262218566c5125483605447368.jpg',''),(5,5,'img/img_202303030126221dcdca7fb90546f26c3ddd.jpg',''),(6,6,'img/img_20230303012842c9bf8a59878270e606cd13.jpg','\0');
+INSERT INTO `imagenes` VALUES (1,1,'img/img_20230303012451ca61d7beb1cfa933991955.jpg',''),(2,2,'img/img_202303030125138166116a071d31037e22ea.png',''),(3,4,'img/img_202303030126088993c5e159eb58a3feb195.jpg',''),(4,5,'img/img_2023030301262218566c5125483605447368.jpg',''),(5,5,'img/img_202303030126221dcdca7fb90546f26c3ddd.jpg',''),(48,48,'img/img_20230306021721c659293f37ed2a40d67d46.jpg','');
 /*!40000 ALTER TABLE `imagenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +202,7 @@ CREATE TABLE `productos` (
   PRIMARY KEY (`id`),
   KEY `Tipo_Producto_id` (`Tipo_Producto_id`),
   CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`Tipo_Producto_id`) REFERENCES `tipo_productos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +211,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (1,'R-14','Molino eléctrico de uso doméstico utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 5 a 15 kg/hr aprox según el producto.','Discos de 3″\nTransmisión de engrane y sinfín\nMotor de 1/3 hp monofásico a 110 volts\nCon aceite para transmisión SN/250',3500,4,'',1,''),(2,'Poleas Cubierto','Molino eléctrico de uso doméstico con protección en la transmisión de bandas y poleas, utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 5 a 15 kg/hr aprox según el producto.','Discos de 3″\nTransmisión de poleas\nMotor de 1/3 hp monofásico a 110 volts\nBandas A15\nReja de fierro vaciado',3200,12,'',1,''),(3,'Poleas Descubierto','Molino eléctrico de uso doméstico utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 5 a 15 kg/hr aprox según el producto.','Discos de 3″\nTransmisión de poleas y banda\nMotor de 1/3 hp monofásico a 110 volts',3000,3,'',1,''),(4,'Sara 4','Molino eléctrico de uso semi doméstico utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 10 a 20 kg/hr aprox. según el producto.','Discos de 4″\nTransmisión de banda y polea\nFabricado en acero\nMotor de 1/2 hp monofásico a 110 volts',5000,4,'',1,''),(5,'Elote tierno','Molino eléctrico para pequeñas industrias, utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 10 a 30 kg/hr aprox. según sea el producto.','Discos de 6″\nTransmisión de banda y polea\nFabricado en acero\nMotor de 1 hp monofásico a 110 volts\nCentro de carga con pastilla',6000,3,'',1,''),(6,'AMASDORA','poiuy','oiuyt',15000,1,'',3,'\0');
+INSERT INTO `productos` VALUES (1,'R-14','Molino eléctrico de uso doméstico utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 5 a 15 kg/hr aprox según el producto.','Discos de 3″\nTransmisión de engrane y sinfín\nMotor de 1/3 hp monofásico a 110 volts\nCon aceite para transmisión SN/250',3500,4,'',1,''),(2,'Poleas Cubierto','Molino eléctrico de uso doméstico con protección en la transmisión de bandas y poleas, utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 5 a 15 kg/hr aprox según el producto.','Discos de 3″\nTransmisión de poleas\nMotor de 1/3 hp monofásico a 110 volts\nBandas A15\nReja de fierro vaciado',3200,12,'',1,''),(3,'Poleas Descubierto','Molino eléctrico de uso doméstico utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 5 a 15 kg/hr aprox según el producto.','Discos de 3″\nTransmisión de poleas y banda\nMotor de 1/3 hp monofásico a 110 volts',3000,3,'',1,''),(4,'Sara 4','Molino eléctrico de uso semi doméstico utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 10 a 20 kg/hr aprox. según el producto.','Discos de 4″\nTransmisión de banda y polea\nFabricado en acero\nMotor de 1/2 hp monofásico a 110 volts',5000,4,'',1,''),(5,'Elote tierno','Molino eléctrico para pequeñas industrias, utilizado para molienda de nixtamal, elote tierno, granos, chile, cacao, café, queso, etc., con una capacidad de 10 a 30 kg/hr aprox. según sea el producto.','Discos de 6″\nTransmisión de banda y polea\nFabricado en acero\nMotor de 1 hp monofásico a 110 volts\nCentro de carga con pastilla',6000,3,'',1,''),(6,'AMASDORA','poiuy','oiuyt',15000,1,'',3,''),(7,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(8,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(9,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(10,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(11,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(12,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(13,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(14,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(15,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(16,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(17,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(18,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(19,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(20,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(21,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(22,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(23,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(24,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(25,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(26,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(27,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(28,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(29,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(30,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(31,'pruebas','dsfsdf','sdfsdf',148,5,'\0',1,''),(32,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(33,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(34,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(35,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(36,'pruebas','fdgd','sdfsfs',148,5,'\0',1,''),(37,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(38,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(39,'pruebas','tedfsdf','sdfdsfds',148,5,'\0',1,''),(40,'pruebas','rrrrrreeeeeedee','sdfsdf',148,5,'\0',1,''),(41,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(42,'pruebas','fdgd','sdfsdf',148,5,'\0',1,''),(43,'nombre','dsdsfdsf','sdfdsf',500,3,'',1,''),(44,'nombre','sdfds','sdfdsf',5,3,'',1,''),(45,'nombre','sdfds','sdfdsf',5000,3,'',1,''),(46,'nombre','sdfds','sdfdsf',5000,3,'',1,''),(47,'nombre','sdfds','sdfdsf',50,3,'',1,''),(48,'raton','saddsfs','dsfdsf',590,4,'',1,'');
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -254,7 +254,7 @@ CREATE TABLE `tipo_productos` (
 
 LOCK TABLES `tipo_productos` WRITE;
 /*!40000 ALTER TABLE `tipo_productos` DISABLE KEYS */;
-INSERT INTO `tipo_productos` VALUES (1,'Molinos'),(2,'Tortilladora'),(3,'Mezcladora');
+INSERT INTO `tipo_productos` VALUES (1,'Molino'),(2,'Tortilladora'),(3,'Mezcladora');
 /*!40000 ALTER TABLE `tipo_productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,7 +269,7 @@ CREATE TABLE `tipousuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_tipo` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,7 +278,7 @@ CREATE TABLE `tipousuarios` (
 
 LOCK TABLES `tipousuarios` WRITE;
 /*!40000 ALTER TABLE `tipousuarios` DISABLE KEYS */;
-INSERT INTO `tipousuarios` VALUES (1,'Administrador'),(2,'Usuario');
+INSERT INTO `tipousuarios` VALUES (1,'Administrador'),(2,'Usuario'),(3,'root');
 /*!40000 ALTER TABLE `tipousuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +304,7 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   KEY `tipo_usuario_id` (`tipo_usuario_id`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`tipo_usuario_id`) REFERENCES `tipousuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +313,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'root','d6ca3fd0c3a3b462ff2b83436dda495e','Silvino','Aguiar',NULL,'2002-01-01','2121100431@soy.utj.edu.mx','',1,'');
+INSERT INTO `usuarios` VALUES (1,'root','d6ca3fd0c3a3b462ff2b83436dda495e','Silvino','Aguiar',NULL,'2002-01-01','2121100431@soy.utj.edu.mx','',3,''),(2,'jarvis','d6ca3fd0c3a3b462ff2b83436dda495e','Silvino','aguiar','veliz','2000-01-01','silvinoAguiar15@soy.utj.edu.mx','',1,''),(3,'cliente','4983a0ab83ed86e0e7213c8783940193','Veli<','Silvino','Aguiar','2023-03-08','dfgfd@asds','',2,''),(4,'prueba','827ccb0eea8a706c4c34a16891f84e7b','Silvino','Aguiar','Veliz','2023-03-07','asdsad@sdfds','',2,'');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,6 +343,69 @@ LOCK TABLES `usuarios_has_actividad` WRITE;
 /*!40000 ALTER TABLE `usuarios_has_actividad` DISABLE KEYS */;
 /*!40000 ALTER TABLE `usuarios_has_actividad` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `vw_catalogo`
+--
+
+DROP TABLE IF EXISTS `vw_catalogo`;
+/*!50001 DROP VIEW IF EXISTS `vw_catalogo`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `vw_catalogo` AS SELECT
+ 1 AS `id`,
+  1 AS `nombre`,
+  1 AS `precio`,
+  1 AS `stock`,
+  1 AS `status`,
+  1 AS `nombre_tipo` */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping routines for database 'molinos'
+--
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `vista_carrito` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `vista_carrito`(in user_id int)
+BEGIN
+select  p.id, p.nombre, p.precio, p.stock, cp.cantidad, c.total, i.path, cp.`as` from carritos as c
+	join carritos_has_productos as cp on cp.carritos_id = c.id
+    join productos as p on p.id = cp.Productos_id
+    left join imagenes as i on i.productos_id = p.id
+    where c.usuario_id = user_id and cp.`as` = 1
+    group by p.id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `vw_catalogo`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_catalogo`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_catalogo` AS select `p`.`id` AS `id`,`p`.`nombre` AS `nombre`,`p`.`precio` AS `precio`,`p`.`stock` AS `stock`,`p`.`status` AS `status`,`tp`.`nombre_tipo` AS `nombre_tipo` from (`productos` `p` join `tipo_productos` `tp` on(`tp`.`id` = `p`.`Tipo_Producto_id`)) where `p`.`as` = 1 */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -353,4 +416,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-04  0:07:44
+-- Dump completed on 2023-03-06 21:13:40

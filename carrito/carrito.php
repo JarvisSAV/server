@@ -93,7 +93,7 @@ class Carrito
                 $json["msg"] = "Producto agregado correctamente";
                 $json["flag"] = true;
             }
-
+            $conn->close();
             return $json;
 
         } catch (\Throwable $th) {
@@ -154,16 +154,18 @@ class Carrito
 
             $query = "UPDATE carritos_has_productos set `as` = 0 where carritos_id = $this->id and productos_id = $producto_id";
             mysqli_query($conn, $query);
-
+            
             $json["msg"] = "Producto eliminado correctamente" . mysqli_error($conn);
             $json["flag"] = true;
+
+            $conn->close();
+            
         } catch (\Throwable $th) {
             //throw $th;
             $json["msg"] = "Error al eliminar" . $th;
             $json["flag"] = false;
         }
 
-        $conn->close();
         return $json;
     }
 }
