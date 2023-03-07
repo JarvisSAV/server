@@ -18,12 +18,13 @@
     // }
 
     function conexionMSQLI(){
-        $servername = "127.0.0.1";
-        $database = "molinos";
+        $servername = "containers-us-west-93.railway.app";
+        $database = "railway";
         $username = "root";
-        $password = "";
+        $password = "gupZAagttaKdHHSo4OFi";
+        $port = '6769';
         // Create connection
-        $conn = mysqli_connect($servername, $username, $password, $database);
+        $conn = mysqli_connect($servername, $username, $password, $database,$port);
         // Check connection
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
